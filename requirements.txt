@@ -1,0 +1,20 @@
+# Core Web Framework & ASGI Server
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic>=2.0.0
+python-multipart>=0.0.6
+
+# Image Processing & Computer Vision
+numpy>=1.24.0
+pillow>=10.0.0
+opencv-python-headless>=4.8.0
+
+# Deep Learning (TensorFlow / Keras)
+# Standard installation for Linux, Windows, Intel Mac:
+tensorflow>=2.15.0; sys_platform != 'darwin' or platform_machine != 'arm64'
+# Apple Silicon (M1/M2/M3/M4 Mac) acceleration:
+tensorflow-macos>=2.15.0; sys_platform == 'darwin' and platform_machine == 'arm64'
+
+# Testing & Utilities
+httpx>=0.25.0
+pytest>=7.4.0

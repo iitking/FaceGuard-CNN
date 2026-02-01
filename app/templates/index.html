@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FaceGuard CNN | Real-Time AI Face Mask Detection</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%3E%3Ctext y=%2226%22 font-size=%2224%22>🛡️</text></svg>">
+</head>
+<body>
+  <!-- Background Glow & Grid -->
+  <div class="cyber-grid"></div>
+  <div class="glow-orb glow-orb-1"></div>
+  <div class="glow-orb glow-orb-2"></div>
+
+  <!-- Main App Shell -->
+  <div class="app-container">
+    
+    <!-- Top Navbar -->
+    <header class="navbar">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="M9 12l2 2 4-4"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>FaceGuard<span class="gradient-text">.CNN</span></h1>
+          <p class="brand-tag">Deep Learning Safety Surveillance</p>
+        </div>
+      </div>
+
+      <div class="nav-controls">
+        <div class="system-status" id="systemStatus">
+          <span class="status-dot pulse"></span>
+          <span class="status-label">Checking Model...</span>
+        </div>
+        <a href="/docs" target="_blank" class="btn btn-glass btn-sm">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+          API Docs
+        </a>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+      <button class="tab-btn active" data-tab="uploadTab">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="17 8 12 3 7 8"></polyline>
+          <line x1="12" y1="3" x2="12" y2="15"></line>
+        </svg>
+        Image Scanner
+      </button>
+      <button class="tab-btn" data-tab="webcamTab">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M23 7l-7 5 7 5V7z"></path>
+          <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+        </svg>
+        Live Webcam
+      </button>
+      <button class="tab-btn" data-tab="archTab">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+        Model Architecture
+      </button>
+      <button class="tab-btn" data-tab="apiTab">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="4 17 10 11 4 5"></polyline>
+          <line x1="12" y1="19" x2="20" y2="19"></line>
+        </svg>
+        API Integration
+      </button>
+    </nav>
+
+    <!-- TAB 1: FILE UPLOAD & IMAGE SCANNER -->
+    <section class="tab-content active" id="uploadTab">
+      <div class="grid-2-col">
+        <!-- Left: Upload Box -->
+        <div class="glass-card upload-card">
+          <div class="card-header">
+            <h2>Select or Drop Image</h2>
+            <div class="toggle-group">
+              <label class="switch-label" title="Automatically locate face and crop before prediction">
+                <input type="checkbox" id="autoCropToggle" checked>
+                <span class="switch-slider"></span>
+                <span>Auto Face Detect</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Drop Area -->
+          <div class="drop-zone" id="dropZone">
+            <input type="file" id="fileInput" accept="image/*" class="file-input-hidden">
+            <div class="drop-zone-content" id="dropZonePlaceholder">
+              <div class="upload-icon-circle">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+              </div>
+              <h3>Drag & drop your image here</h3>
+              <p>Supports JPG, PNG, WEBP (up to 15MB)</p>
+              <button class="btn btn-primary btn-sm" type="button" onclick="document.getElementById('fileInput').click()">
+                Browse File
+              </button>
+            </div>
+
+            <!-- Preview Image with Laser Scanning Line -->
+            <div class="preview-wrapper hidden" id="previewWrapper">
+              <div class="laser-scanner" id="laserScanner"></div>
+              <img id="previewImage" alt="Preview Image" class="preview-img">
+            </div>
+          </div>
+
+          <!-- Quick Sample Images -->
+          <div class="quick-samples">
+            <span class="samples-label">Quick Test Presets:</span>
+            <button class="btn-sample" id="sampleMaskBtn">
+              😷 Mask Sample
+            </button>
+            <button class="btn-sample" id="sampleNoMaskBtn">
+              🙂 No-Mask Sample
+            </button>
+            <button class="btn-sample" id="clearImageBtn" style="margin-left: auto;">
+              Reset
+            </button>
+          </div>
+        </div>
+
+        <!-- Right: Results Card -->
+        <div class="glass-card result-card" id="resultCard">
+          <div class="card-header">
+            <h2>Detection Analysis</h2>
+            <span class="badge badge-neutral" id="statusBadge">Awaiting Input</span>
+          </div>
+
+          <div class="result-placeholder" id="resultPlaceholder">
+            <div class="placeholder-icon">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+            </div>
+            <p>Upload or drag an image on the left to view neural network classification, face bounding boxes, and compliance score.</p>
+          </div>
+
+          <!-- Active Results Container -->
+          <div class="result-details hidden" id="resultDetails">
+            <!-- Big Status Hero -->
+            <div class="status-hero" id="statusHero">
+              <div class="hero-icon" id="heroIcon">🛡️</div>
+              <div class="hero-info">
+                <div class="hero-label" id="heroLabel">WITH MASK</div>
+                <div class="hero-subtext" id="heroSubtext">Individual is safety compliant</div>
+              </div>
+              <div class="hero-score" id="heroScore">98.5%</div>
+            </div>
+
+            <!-- Probability Gauges -->
+            <div class="metrics-grid">
+              <div class="metric-item">
+                <div class="metric-header">
+                  <span>With Mask Probability</span>
+                  <strong id="probMaskText">98.5%</strong>
+                </div>
+                <div class="progress-bar-bg">
+                  <div class="progress-bar-fill fill-green" id="probMaskBar" style="width: 98.5%;"></div>
+                </div>
+              </div>
+
+              <div class="metric-item">
+                <div class="metric-header">
+                  <span>Without Mask Probability</span>
+                  <strong id="probNoMaskText">1.5%</strong>
+                </div>
+                <div class="progress-bar-bg">
+                  <div class="progress-bar-fill fill-red" id="probNoMaskBar" style="width: 1.5%;"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Face Detections Table / Breakdown -->
+            <div class="face-breakdown" id="faceBreakdownContainer">
+              <div class="breakdown-title">
+                <span>Detected Subject(s):</span>
+                <span class="badge badge-accent" id="faceCountBadge">1 Face</span>
+              </div>
+              <div class="face-list" id="faceList"></div>
+            </div>
+
+            <!-- Annotated Image Display -->
+            <div class="annotated-section">
+              <div class="annotated-header">
+                <h4>AI Annotated Output</h4>
+                <a id="downloadAnnotatedBtn" download="faceguard_scan.jpg" class="btn btn-glass btn-xs">
+                  Download
+                </a>
+              </div>
+              <div class="annotated-preview-box">
+                <img id="annotatedImage" alt="Annotated Output" class="annotated-img">
+              </div>
+            </div>
+
+            <!-- Diagnostics footer -->
+            <div class="diagnostics-bar">
+              <span>⚡ Inference: <strong id="latencyText">24 ms</strong></span>
+              <span>Input Size: <strong>128x128x3</strong></span>
+              <span>Model: <strong>FaceGuard CNN v1.0</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: LIVE WEBCAM SCANNER -->
+    <section class="tab-content" id="webcamTab">
+      <div class="grid-2-col">
+        <!-- Left: Webcam Feed -->
+        <div class="glass-card">
+          <div class="card-header">
+            <h2>Real-Time Camera Feed</h2>
+            <div class="webcam-actions">
+              <label class="switch-label" title="Play sound alert if someone is not wearing a mask">
+                <input type="checkbox" id="audioAlertToggle" checked>
+                <span class="switch-slider"></span>
+                <span>Audio Alert 🔔</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="webcam-viewport" id="webcamViewport">
+            <video id="webcamVideo" autoplay playsinline muted></video>
+            <canvas id="webcamCanvas" class="hidden"></canvas>
+            
+            <div class="webcam-placeholder" id="webcamPlaceholder">
+              <div class="camera-icon-circle">
+                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M23 7l-7 5 7 5V7z"></path>
+                  <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                </svg>
+              </div>
+              <h3>Webcam is Currently Inactive</h3>
+              <p>Click below to initialize your camera for live safety scanning.</p>
+              <button class="btn btn-primary" id="startWebcamBtn">
+                Start Camera
+              </button>
+            </div>
+
+            <!-- Live HUD Overlay -->
+            <div class="camera-hud hidden" id="cameraHud">
+              <div class="hud-top">
+                <div class="hud-rec">
+                  <span class="rec-dot"></span> LIVE SCANNER
+                </div>
+                <div class="hud-fps" id="hudFps">0 FPS</div>
+              </div>
+              <div class="hud-center-reticle"></div>
+              <div class="hud-bottom" id="hudStatusBanner">
+                Scanning for faces...
+              </div>
+            </div>
+          </div>
+
+          <div class="webcam-toolbar">
+            <button class="btn btn-danger btn-sm hidden" id="stopWebcamBtn">
+              Stop Camera
+            </button>
+            <button class="btn btn-glass btn-sm hidden" id="captureWebcamSnapshotBtn">
+              Capture Snapshot
+            </button>
+            <div class="scan-interval-picker">
+              <label>Scan Interval:</label>
+              <select id="scanIntervalSelect" class="styled-select">
+                <option value="400">400ms (High Speed)</option>
+                <option value="800" selected>800ms (Balanced)</option>
+                <option value="1500">1.5s (Eco Mode)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Webcam Live Telemetry -->
+        <div class="glass-card">
+          <div class="card-header">
+            <h2>Live Telemetry & Compliance</h2>
+            <span class="badge badge-success" id="liveComplianceBadge">System Armed</span>
+          </div>
+
+          <!-- Counters Grid -->
+          <div class="telemetry-grid">
+            <div class="telemetry-box">
+              <div class="telemetry-value" id="countScans">0</div>
+              <div class="telemetry-label">Total Scans</div>
+            </div>
+            <div class="telemetry-box green">
+              <div class="telemetry-value" id="countCompliant">0</div>
+              <div class="telemetry-label">Mask Compliant</div>
+            </div>
+            <div class="telemetry-box red">
+              <div class="telemetry-value" id="countViolations">0</div>
+              <div class="telemetry-label">Violations</div>
+            </div>
+          </div>
+
+          <!-- Live Feed Snapshot Preview -->
+          <div class="live-snapshot-box">
+            <h4>Latest Frame Evaluation</h4>
+            <div class="live-preview-target" id="livePreviewTarget">
+              <div class="placeholder-text">Awaiting live camera frame...</div>
+            </div>
+            <div class="live-decision-badge" id="liveDecisionBadge">
+              Status: Idle
+            </div>
+          </div>
+
+          <!-- Live Compliance Tips -->
+          <div class="compliance-guidelines">
+            <h4>Safety Protocol</h4>
+            <ul>
+              <li>Face must be centered with adequate ambient lighting.</li>
+              <li>Mask must cover nose, mouth, and chin completely.</li>
+              <li>Audio alerts sound automatically upon detected non-compliance.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: MODEL ARCHITECTURE & METRICS -->
+    <section class="tab-content" id="archTab">
+      <div class="glass-card">
+        <div class="card-header">
+          <h2>FaceGuard CNN Deep Learning Architecture</h2>
+          <span class="badge badge-accent">98.28% Test Accuracy</span>
+        </div>
+
+        <div class="arch-overview">
+          <p>
+            The <strong>FaceGuard-CNN</strong> model is a lightweight, high-performance Convolutional Neural Network
+            specifically architected for fast inference on edge devices, servers, and video streams. Trained on the
+            benchmark Kaggle Face Mask Dataset (7,553 labeled images) over 30 epochs with Adam optimization and early stopping.
+          </p>
+        </div>
+
+        <!-- Metric Cards -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-num">98.28%</div>
+            <div class="kpi-label">Test Set Accuracy</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-num">0.0548</div>
+            <div class="kpi-label">Test Cross-Entropy Loss</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-num">128 × 128</div>
+            <div class="kpi-label">RGB Input Resolution</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-num">~18 ms</div>
+            <div class="kpi-label">Avg Inference Latency</div>
+          </div>
+        </div>
+
+        <!-- Layer by Layer Diagram -->
+        <h3 class="section-title">Network Pipeline</h3>
+        <div class="layers-flow">
+          <div class="layer-step">
+            <div class="layer-tag">Input</div>
+            <h4>Input Layer</h4>
+            <p>128×128×3 RGB</p>
+          </div>
+          <div class="layer-arrow">→</div>
+          <div class="layer-step">
+            <div class="layer-tag">Augment</div>
+            <h4>Data Augment</h4>
+            <p>Flip, Rotate, Zoom</p>
+          </div>
+          <div class="layer-arrow">→</div>
+          <div class="layer-step">
+            <div class="layer-tag">Conv Block 1</div>
+            <h4>Conv2D (32, 3×3)</h4>
+            <p>BatchNorm + MaxPool(2×2)</p>
+          </div>
+          <div class="layer-arrow">→</div>
+          <div class="layer-step">
+            <div class="layer-tag">Conv Block 2</div>
+            <h4>Conv2D (64, 3×3)</h4>
+            <p>BatchNorm + MaxPool(2×2)</p>
+          </div>
+          <div class="layer-arrow">→</div>
+          <div class="layer-step">
+            <div class="layer-tag">Conv Block 3</div>
+            <h4>Conv2D (128, 3×3)</h4>
+            <p>BatchNorm + MaxPool(2×2)</p>
+          </div>
+          <div class="layer-arrow">→</div>
+          <div class="layer-step">
+            <div class="layer-tag">Conv Block 4</div>
+            <h4>Conv2D (256, 3×3)</h4>
+            <p>BatchNorm + MaxPool(2×2)</p>
+          </div>
+          <div class="layer-arrow">→</div>
+          <div class="layer-step">
+            <div class="layer-tag">Classifier</div>
+            <h4>GlobalAvgPool + Dense</h4>
+            <p>Dense(128) + Dense(64) + Dropout</p>
+          </div>
+          <div class="layer-arrow">→</div>
+          <div class="layer-step highlight">
+            <div class="layer-tag">Output</div>
+            <h4>Softmax (2)</h4>
+            <p>Mask (1) / No-Mask (0)</p>
+          </div>
+        </div>
+
+        <div class="details-box">
+          <h4>💡 Why Global Average Pooling & Batch Normalization?</h4>
+          <p>
+            By replacing flattening with <code>GlobalAveragePooling2D</code>, the model eliminates massive fully-connected parameter bloat,
+            preventing overfitting while keeping the weights compact (~5.2 MB). <code>BatchNormalization</code> after every convolutional block
+            stabilizes internal covariate shift, allowing convergence in 30 epochs with superior generalization.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: API INTEGRATION -->
+    <section class="tab-content" id="apiTab">
+      <div class="glass-card">
+        <div class="card-header">
+          <h2>REST API Developer Documentation</h2>
+          <a href="/docs" target="_blank" class="btn btn-primary btn-sm">Interactive Swagger UI →</a>
+        </div>
+
+        <p class="api-intro">
+          FaceGuard-CNN provides high-speed HTTP REST endpoints for easy integration with web applications, mobile apps, CCTV RTSP processors, and IoT edge devices.
+        </p>
+
+        <!-- Code Snippets Carousel / Tabs -->
+        <div class="code-snippets">
+          <div class="snippet-header">
+            <span class="method post">POST</span>
+            <span class="endpoint">/api/predict</span>
+            <span class="snippet-desc">Upload multipart image</span>
+          </div>
+
+          <div class="code-block">
+            <div class="code-title">Python (requests)</div>
+            <pre><code>import requests
+
+url = "http://localhost:8000/api/predict"
+files = {"file": open("photo.jpg", "rb")}
+params = {"detect_faces": True}
+
+response = requests.post(url, files=files, params=params)
+data = response.json()
+
+print("Status:", data["primary_label"])
+print("Mask Compliant:", data["is_wearing_mask"])
+print("Confidence:", f"{data['confidence'] * 100:.1f}%")</code></pre>
+          </div>
+
+          <div class="code-block" style="margin-top: 1rem;">
+            <div class="code-title">cURL (Command Line)</div>
+            <pre><code>curl -X POST "http://localhost:8000/api/predict?detect_faces=true" \
+  -H "accept: application/json" \
+  -H "Content-Type: multipart/form-data" \
+  -F "file=@/path/to/face.jpg"</code></pre>
+          </div>
+
+          <div class="code-block" style="margin-top: 1rem;">
+            <div class="code-title">JavaScript (Fetch API)</div>
+            <pre><code>const formData = new FormData();
+formData.append("file", fileInput.files[0]);
+
+const response = await fetch("/api/predict", {
+  method: "POST",
+  body: formData
+});
+const result = await response.json();
+console.log(result.primary_label, result.confidence);</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="footer-left">
+        <strong>FaceGuard-CNN</strong> • Production AI Mask Detection System
+      </div>
+      <div class="footer-right">
+        <span>Powered by FastAPI & TensorFlow/Keras</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
