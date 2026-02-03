@@ -13,3 +13,4 @@ Using Kaggle Face Mask Dataset (7,553 images).
 ### Pipeline
 - Kaggle API download and zip extraction configured.
 - Verified RGB image formatting across dataset.
+- Label mapping: 0 -> Without Mask, 1 -> With Mask.
