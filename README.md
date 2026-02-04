@@ -17,3 +17,4 @@ Using Kaggle Face Mask Dataset (7,553 images).
 
 ### Preprocessing
 - PIL Image RGB conversion pipeline.
+- Image resizing standardized to (128, 128).
