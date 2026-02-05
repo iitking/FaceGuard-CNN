@@ -19,3 +19,6 @@ Using Kaggle Face Mask Dataset (7,553 images).
 - PIL Image RGB conversion pipeline.
 - Image resizing standardized to (128, 128).
 - Normalization to [0.0, 1.0] float32 array.
+
+### Splitting
+- 80/20 train/test split with stratified sampling.
