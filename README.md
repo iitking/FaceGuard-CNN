@@ -22,3 +22,4 @@ Using Kaggle Face Mask Dataset (7,553 images).
 
 ### Splitting
 - 80/20 train/test split with stratified sampling.
+- Verified zero data leakage between splits.
