@@ -27,3 +27,4 @@ Using Kaggle Face Mask Dataset (7,553 images).
 
 ### Augmentation
 - Random horizontal flip enabled.
+- Random rotation 8% and random zoom 10%.
