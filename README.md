@@ -32,3 +32,4 @@ Using Kaggle Face Mask Dataset (7,553 images).
 
 ### Architecture
 - Input shape: (128, 128, 3).
+- Conv Block 1: Conv2D(32, (3,3), activation='relu', padding='same').
