@@ -29,3 +29,6 @@ Using Kaggle Face Mask Dataset (7,553 images).
 - Random horizontal flip enabled.
 - Random rotation 8% and random zoom 10%.
 - ImageDataGenerator parameters tuned with shear and shift.
+
+### Architecture
+- Input shape: (128, 128, 3).
