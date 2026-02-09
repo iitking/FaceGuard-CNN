@@ -39,3 +39,4 @@ Using Kaggle Face Mask Dataset (7,553 images).
 - Spatial reduction: 128x128 -> 64x64 -> 32x32.
 - Conv Block 3: Conv2D(128, (3,3), padding='same').
 - Conv Block 3: BatchNormalization and MaxPooling2D.
+- Validated receptive field expansion.
