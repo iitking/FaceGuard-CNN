@@ -40,3 +40,4 @@ Using Kaggle Face Mask Dataset (7,553 images).
 - Conv Block 3: Conv2D(128, (3,3), padding='same').
 - Conv Block 3: BatchNormalization and MaxPooling2D.
 - Validated receptive field expansion.
+- Conv Block 4: Conv2D(256, (3,3), padding='same').
