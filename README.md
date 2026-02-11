@@ -45,3 +45,4 @@ Using Kaggle Face Mask Dataset (7,553 images).
 - Conv Block 4: MaxPooling2D -> final feature maps at 8x8x256.
 - Head: GlobalAveragePooling2D replaces flatten to prevent overfitting.
 - Head: Dense(128, activation='relu').
+- Head: BatchNormalization + Dropout(0.5).
