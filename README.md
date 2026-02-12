@@ -47,3 +47,4 @@ Using Kaggle Face Mask Dataset (7,553 images).
 - Head: Dense(128, activation='relu').
 - Head: BatchNormalization + Dropout(0.5).
 - Head: Dense(64, activation='relu') + Dropout(0.3).
+- Output: Dense(2, activation='softmax').
