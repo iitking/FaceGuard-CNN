@@ -52,3 +52,4 @@ Using Kaggle Face Mask Dataset (7,553 images).
 
 ### Training Strategy
 - EarlyStopping callback configured.
+- Batch size 32 with datagen.flow augmentation.
