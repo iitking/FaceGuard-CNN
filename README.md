@@ -49,3 +49,6 @@ Using Kaggle Face Mask Dataset (7,553 images).
 - Head: Dense(64, activation='relu') + Dropout(0.3).
 - Output: Dense(2, activation='softmax').
 - Optimizer: Adam(lr=0.001), Loss: sparse_categorical_crossentropy.
+
+### Training Strategy
+- EarlyStopping callback configured.
