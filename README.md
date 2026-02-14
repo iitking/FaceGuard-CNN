@@ -55,3 +55,4 @@ Using Kaggle Face Mask Dataset (7,553 images).
 - Batch size 32 with datagen.flow augmentation.
 - Total epochs: 30 planned.
 - Epochs 1-10: Loss steadily decreases from 0.42 to 0.15.
+- Epochs 11-20: Accuracy crosses 96% with stable gradients.
