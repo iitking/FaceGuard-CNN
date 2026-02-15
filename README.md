@@ -57,3 +57,6 @@ Using Kaggle Face Mask Dataset (7,553 images).
 - Epochs 1-10: Loss steadily decreases from 0.42 to 0.15.
 - Epochs 11-20: Accuracy crosses 96% with stable gradients.
 - Epochs 21-30: Training accuracy reaches 97.7%.
+
+### Benchmarks
+- Test Accuracy: 98.28%
