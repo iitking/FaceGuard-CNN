@@ -61,3 +61,4 @@ Using Kaggle Face Mask Dataset (7,553 images).
 ### Benchmarks
 - Test Accuracy: 98.28%
 - Test Loss: 0.0548.
+- Evaluation confirms high generalization and robust feature detection.
