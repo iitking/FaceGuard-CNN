@@ -62,3 +62,4 @@ Using Kaggle Face Mask Dataset (7,553 images).
 - Test Accuracy: 98.28%
 - Test Loss: 0.0548.
 - Evaluation confirms high generalization and robust feature detection.
+- Both .keras and .pkl model artifacts saved and verified.
