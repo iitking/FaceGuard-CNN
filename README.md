@@ -275,32 +275,6 @@ pytest tests/ -v
 
 ---
 
-## 📤 Pushing to GitHub (Step-by-Step)
-
-If you haven't uploaded this repository to GitHub yet, run these commands in your terminal:
-
-```bash
-# 1. Initialize git
-git init
-
-# 2. Add all project files
-git add .
-
-# 3. Create your first commit
-git commit -m "feat: initial commit of FaceGuard-CNN with FastAPI and Web UI"
-
-# 4. Rename default branch to main
-git branch -M main
-
-# 5. Add your GitHub repository remote (replace with your repo URL)
-git remote add origin https://github.com/<YOUR_USERNAME>/FaceGuard-CNN.git
-
-# 6. Push to GitHub!
-git push -u origin main
-```
-
----
-
 ## 👨‍💻 Author
 
 <div align="center">
